@@ -4,7 +4,7 @@ import './Check-Result.scss'
 import {AtList, AtListItem} from "taro-ui";
 
 const Check_Result = (props) => {
-  const goToDetail=()=>{
+  const   _goToDetail=()=>{
     Taro.navigateTo({
       url: '/pages/home/detail/Detail',
       events: {
@@ -33,7 +33,7 @@ const Check_Result = (props) => {
             note='2019-01-10  周四'
             hasBorder={true}
             extraText='立即查看'
-            onClick={goToDetail}
+            onClick={_goToDetail}
           />
         </AtList>
       </View>

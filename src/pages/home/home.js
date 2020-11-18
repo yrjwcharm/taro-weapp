@@ -11,7 +11,7 @@ const RECOMMEND_SIZE = 20
 
 // @connect(state => state.home, { ...actions, dispatchCartNum })
 const Home = (props) => {
-  const goToDetail = () => {
+  const _goToCheck_Result = () => {
     Taro.navigateTo({
       url: '/pages/home/query/Check-Result',
       events: {
@@ -50,8 +50,8 @@ const Home = (props) => {
   return (
     <View className='container'>
       <Banner list={[{rank:0,img:Carousel},{rank: 1,img:Carousel},{rank: 2,img:Carousel}]}/>
-      <View className='container_section' onClick={goToOrganization}>
-          <View className='home_wrap'>
+      <View className='container_section'>
+          <View className='home_wrap' onClick={goToOrganization}>
             <Image className='home_wrap_img'
                    src={'http://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png'}/>
             <View className='home_wrap_desp'>
@@ -59,7 +59,7 @@ const Home = (props) => {
               <Text className='home_wrap_desp_detail'>检验结果查询</Text>
             </View>
           </View>
-        <View className='home_wrap' onClick={goToDetail}>
+        <View className='home_wrap' onClick={_goToCheck_Result}>
             <Image className='home_wrap_img'
                    src={'http://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png'}/>
             <View className='home_wrap_desp'>

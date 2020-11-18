@@ -42,7 +42,7 @@ const ImmediateOrder =(props)=>{
         <Text className='container_header_orderTime'>预约时间</Text>
         <ScrollView
           className='scrollview'
-          scrollX
+          scrollY
           scrollWithAnimation
           scrollTop={scrollTop}
           style={scrollStyle}
@@ -61,6 +61,6 @@ const ImmediateOrder =(props)=>{
   )
 }
 ImmediateOrder.config = {
-  navigationBarTitleText: '新冠核酸检测'
+  navigationBarTitleText: '立即预约'
 }
 export  default  ImmediateOrder
