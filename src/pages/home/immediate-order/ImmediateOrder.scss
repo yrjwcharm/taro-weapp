@@ -1,0 +1,59 @@
+.container{
+  position: relative;
+  height: 100%;
+  background-color: #f3f3f7;
+  &_header{
+    margin-top: 2px;
+    background-color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    &_list_item{
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 1);
+      border: none;
+      border-radius: 12px;
+      -moz-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.0470588235294118);
+      -webkit-box-shadow: 0 5px 5px rgba(0, 0 ,0 ,0.05);
+      box-shadow: 0 5px 5px rgba(0, 0 ,0 ,0.05);
+      height: 194px;
+      &_pic{
+        width:244px;
+        height:154px;
+        margin-right: 20px;
+        border-radius: 10px;
+      }
+      &_desc{
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        &_hospital{
+          font-size:28px;
+          color:#333;
+          flex:1;
+        }
+        &_item{
+          flex:1;
+          font-size:26px;
+          margin-top: 10px;
+          color:#333;
+        }
+        &_address{
+          flex:1;
+          margin-top: 20px;
+          font-size:24px;
+          color:#BCBCBC;
+        }
+      }
+    }
+    &_orderTime{
+      margin-top: 30px;
+      font-weight: 500;
+    }
+
+  }
+
+
+}

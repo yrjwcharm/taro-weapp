@@ -1,0 +1,29 @@
+.container{
+  position: relative;
+  height: 100%;
+  flex: 1;
+  background-color: #f3f3f7;
+  &_section{
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  &_footer{
+    height:90px;
+    display: flex;
+    background-color: rgba(50, 152, 255, 1);
+    align-items: center;
+    justify-content: center;
+    &_next{
+      text-align: center;
+      font-size: 32px;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import "@styles/theme.scss";
+.user-profile {
+  position: relative;
+  height:100%;
+  background-color: #f3f3f7;
+}
+.user-profile-avatar{
+  height: 157px;
+  padding-left: 30px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  &-img {
+    width: 90px;
+    border-radius: 45px;
+    height: 90px;
+  }
+  &-nickname{
+    margin-left: 20px;
+    font-size: 28px;
+  }
+}
+
+.user-profile-wrap{
+  margin-top: 20px;
+  background-color: #fff;
+}

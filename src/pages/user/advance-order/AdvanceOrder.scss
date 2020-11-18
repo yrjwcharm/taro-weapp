@@ -1,0 +1,22 @@
+.container{
+  height: 100%;
+  background-color: #f3f3f7;
+  &_body{
+    padding-top: 4px;
+    &_listItem{
+      background-color: #fff;
+      margin-top: 4px;
+      margin-bottom: 20px;
+      &_operate{
+        display: flex;
+        height: 100px;
+        padding-right: 20px;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+  }
+}
+.order_op_1{
+  margin-left: 20px;
+}
