@@ -2,7 +2,7 @@ import Taro, {Component, useState} from '@tarojs/taro'
 import {View, Text, ScrollView, Image} from '@tarojs/components'
 import {AtSearchBar, AtIcon} from 'taro-ui'
 import Marker from '@assets/home/location.png';
-import Pic from '@assets/home/pic.png'
+import Pic from '@assets/home/pic.svg'
 import './Organization.scss'
 
 const Organization = (props) => {
