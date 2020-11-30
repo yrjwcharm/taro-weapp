@@ -1,73 +1,65 @@
-import Taro from '@tarojs/taro'
-import { API_USER, API_USER_LOGIN } from '@constants/api'
+import Taro from '@tarojs/taro';
+import {showErrorToast} from '../utils/util';
 
-const CODE_SUCCESS = '200'
-const CODE_AUTH_EXPIRED = '600'
-
-function getStorage(key) {
-  return Taro.getStorage({ key }).then(res => res.data).catch(() => '')
-}
-
-function updateStorage(data = {}) {
-  return Promise.all([
-    Taro.setStorage({ key: 'token', data: data['3rdSession'] || '' }),
-    Taro.setStorage({ key: 'uid', data: data['uid'] || ''})
-  ])
-}
 
 /**
- * 简易封装网络请求
- * // NOTE 需要注意 RN 不支持 *StorageSync，此处用 async/await 解决
- * @param {*} options
+ * 封封微信的的request
  */
-export default async function fetch(options) {
-  const { url, payload, method = 'GET', showToast = true, autoLogin = true } = options
-  const token = await getStorage('token')
-  const header = token ? { 'WX-PIN-SESSION': token, 'X-WX-3RD-Session': token } : {}
-  if (method === 'POST') {
-    header['content-type'] = 'application/json'
-  }
+function request(url, data = {}, method = "GET") {
+  return new Promise(function(resolve, reject) {
+    Taro.request({
+      url: url,
+      data: data,
+      method: method,
+      header: {
+        'Content-Type': 'application/json',
+        'X-Litemall-Token': Taro.getStorageSync('token')
+      },
+      success: function(res) {
 
-  return Taro.request({
-    url,
-    method,
-    data: payload,
-    header
-  }).then(async (res) => {
-    const { code, data } = res.data
-    if (code !== CODE_SUCCESS) {
-      if (code === CODE_AUTH_EXPIRED) {
-        await updateStorage({})
+        if (res.statusCode == 200) {
+
+          if (res.data.errno == 501) {
+            // 清除登录相关内容
+            try {
+              Taro.removeStorageSync('userInfo');
+              Taro.removeStorageSync('token');
+            } catch (e) {
+              // Do something when catch error
+            }
+            // 切换到登录页面
+            Taro.navigateTo({
+              url: '/pages/auth/login/login'
+            });
+          } else if(res.data.errno == 0) {
+            resolve(res.data.data);
+          } else {
+            // Taro.showModal({
+            //   title: '错误信息',
+            //   content: res.data.errmsg,
+            //   showCancel: false
+            // });
+            showErrorToast(res.data.errmsg);
+            reject(res.data.errmsg);
+          }
+        } else {
+          reject(res.errMsg);
+        }
+
+      },
+      fail: function(err) {
+        reject(err)
       }
-      return Promise.reject(res.data)
-    }
-
-    if (url === API_USER_LOGIN) {
-      await updateStorage(data)
-    }
-
-    // XXX 用户信息需展示 uid，但是 uid 是登录接口就返回的，比较蛋疼，暂时糅合在 fetch 中解决
-    if (url === API_USER) {
-      const uid = await getStorage('uid')
-      return { ...data, uid }
-    }
-
-    return data
-  }).catch((err) => {
-    const defaultMsg = err.code === CODE_AUTH_EXPIRED ? '登录失效' : '请求异常'
-    if (showToast) {
-      Taro.showToast({
-        title: err && err.errorMsg || defaultMsg,
-        icon: 'none'
-      })
-    }
-
-    if (err.code === CODE_AUTH_EXPIRED && autoLogin) {
-      Taro.navigateTo({
-        url: '/pages/user-login/user-login'
-      })
-    }
-
-    return Promise.reject({ message: defaultMsg, ...err })
-  })
+    })
+  });
 }
+
+request.get = (url, data) => {
+  return request(url, data, 'GET');
+}
+
+request.post = (url, data) => {
+  return request(url, data, 'POST');
+}
+
+export default request;
