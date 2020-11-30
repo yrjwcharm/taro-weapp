@@ -53,10 +53,12 @@ class AddressPicker extends Component {
       const { provinces, citys, areas, value, areaInfo } = this.state
       // 将选择的城市信息显示到输入框
       const tempAreaInfo = provinces[value[0]].name + '' + citys[value[1]].name + areas[value[2]].name
+       const disCoding = provinces[value[0]].id+',' + citys[value[1]].id +','+areas[value[2]].id
       this.setState({
-        areaInfo: tempAreaInfo
+        areaInfo: tempAreaInfo,
+        disCoding
       }, () => {
-        this.props.onHandleToggleShow(this.state.areaInfo)
+        this.props.onHandleToggleShow(this.state.areaInfo,disCoding)
       })
     }
   }

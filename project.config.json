@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "taro-yanxuan",
 	"description": "Taro 多端实践之网易严选（微信小程序 + H5 + React Native）",
-	"appid": "touristappid",
+	"appid": "wxae2ca77ab20990ea",
 	"setting": {
 		"urlCheck": false,
 		"es6": false,

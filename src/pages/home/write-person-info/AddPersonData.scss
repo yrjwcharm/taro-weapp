@@ -35,7 +35,6 @@
   background-color: rgba(255, 255, 255, 1);
   flex-direction: row;
   height: 68px;
-  margin-top: 20px;
   justify-content: center;
   align-items: center;
   &_text{
@@ -49,14 +48,21 @@
   border-bottom-color: rgba(242, 242, 242, 1);
   color: #333;
   height: 96.5px;
+  line-height: 96.5px;
   background-color: #fff;
   font-size: 26px;
   padding-left: 20px;
   padding-right: 20px;
-  line-height:96.5px;
-
   &_left{
     float:left;
+    height: 96.5px;
+    line-height:96.5px;
+  }
+  &_right_{
+    float: right;
+    text-align: right;
+    height: 96.5px;
+    line-height: 96.5px;
   }
   &_right{
     float:right;
@@ -87,5 +93,10 @@
   background-color: #fff;
   height:68.25px;
   width:100%;
+  margin-bottom: 20px;
   //line-height:48.25px;
+}
+.insEscortStaff_wrap{
+  display: flex;
+  flex-direction: column;
 }
