@@ -36,7 +36,7 @@
 
 .picker-item {
   line-height: 70px;
-  font-size: 36px;
+  font-size: 28px;
   text-align: center;
 }
 
@@ -49,12 +49,13 @@
 
   .dialog-title {
     color: #333;
+    font-size: 28px;
   }
 
   .dialog-button {
     display: inline-block;
     text-align: center;
-    font-size: 32px;
+    font-size: 28px;
     color: #E28E81;
     padding: 30px;
     &.cancel {

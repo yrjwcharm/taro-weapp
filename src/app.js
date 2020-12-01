@@ -1,12 +1,14 @@
 import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
-
+import {set as setGlobalData, get as getGlobalData} from './global_data';
 import Index from './pages/'
 
 import configStore from './store'
 
 import './app.scss'
+import * as user from "./utils/user";
+import {loginByWXApi} from "./services/auth";
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -20,6 +22,7 @@ class App extends Component {
   config = {
     pages: [
       'pages/home/home',
+      'pages/auth/login/login',
       'pages/user/user',
       'pages/home/query/Check-Result',
       'pages/home/detail/Detail',
@@ -46,17 +49,65 @@ class App extends Component {
         selectedIconPath: "./assets/tab-bar/home-active.png",
         text: "首页"
       }, {
-        pagePath: "pages/user/user",
+        pagePath:'pages/user/user',
         iconPath: "./assets/tab-bar/user.png",
         selectedIconPath: "./assets/tab-bar/user-active.png",
         text: "我的"
-      }]
+      }],
+    },
+    "networkTimeout": {
+      "request": 10000,
+      "downloadFile": 10000
+    },
+    "debug": true,
+  }
+
+  componentWillMount() {
+      let appId ="wxae2ca77ab20990ea";
+        Taro.login({
+          success:function (res){
+            console.log(444,res.code);
+            loginByWXApi({
+              appid:appId,
+              code:res.code
+            }).then(res=>{
+              console.log(333,res);
+              const {userId,wxid,unionid,sectionKey } = res.data;
+                Taro.setStorageSync('loginInfo',res.data);
+            })
+          }
+        })
+  }
+
+  update = () => {
+    if(process.env.TARO_ENV === 'weapp') {
+      const updateManager = Taro.getUpdateManager();
+      Taro.getUpdateManager().onUpdateReady(function() {
+        Taro.showModal({
+          title: '更新提示',
+          content: '新版本已经准备好，是否重启应用？',
+          success: function(res) {
+            if (res.confirm) {
+              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+              updateManager.applyUpdate()
+            }
+          }
+        })
+      })
     }
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+    this.update();
+  }
 
-  componentDidShow () {}
+  componentDidShow () {
+    user.checkLogin().then(res => {
+      setGlobalData('hasLogin', true);
+    }).catch(() => {
+      setGlobalData('hasLogin', false);
+    });
+  }
 
   componentDidHide () {}
 

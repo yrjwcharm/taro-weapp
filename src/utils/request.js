@@ -13,10 +13,9 @@ function request(url, data = {}, method = "GET") {
       method: method,
       header: {
         'Content-Type': 'application/json',
-        'X-Litemall-Token': Taro.getStorageSync('token')
+          // 'X-Litemall-Token': Taro.getStorageSync('token')
       },
       success: function(res) {
-
         if (res.statusCode == 200) {
 
           if (res.data.errno == 501) {
@@ -39,8 +38,8 @@ function request(url, data = {}, method = "GET") {
             //   content: res.data.errmsg,
             //   showCancel: false
             // });
-            showErrorToast(res.data.errmsg);
-            reject(res.data.errmsg);
+            resolve(res.data);
+            // console.log(444,res.data);
           }
         } else {
           reject(res.errMsg);

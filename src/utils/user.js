@@ -60,7 +60,7 @@ export function loginByWeixin(userInfo) {
 
     }).catch((err) => {
       reject(err);
-    })
+     })
   });
 }
 

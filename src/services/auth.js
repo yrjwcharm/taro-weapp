@@ -3,6 +3,10 @@
 import request from '../utils/request';
 import Api from '../config/api';
 
+export  async  function loginByWXApi(payload){
+  return request.get(Api.AuthLoginByWX, payload);
+}
+
 /**
  *  微信登录
  */
