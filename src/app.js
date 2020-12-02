@@ -26,7 +26,7 @@ class App extends Component {
       'pages/user/user',
       'pages/home/query/Check-Result',
       'pages/home/detail/Detail',
-      'pages/user/advance-order/AdvanceOrder',
+      'pages/user/advance-order/AuditRecord',
       'pages/user/order-success/OrderAppointSuccess',
       'pages/home/organization/Organization',
       'pages/home/write-person-info/AddPersonData',
@@ -39,8 +39,8 @@ class App extends Component {
       navigationBarTextStyle: 'black'
     },
     tabBar: {
-      color: "#666",
-      selectedColor: "#b4282d",
+      color: "#999",
+      selectedColor: "#3399ff",
       backgroundColor: "#fff",
       borderStyle: 'black',
       list: [{

@@ -21,5 +21,7 @@ export default {
 
   UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息
   IssueList: WxApiRoot + 'issue/list', //帮助信息
-  CheckResultQuery:WxApiRoot + '/ncov/BaAppointmentController/my/result'
+  CheckResultQuery:WxApiRoot + '/ncov/BaAppointmentController/my/result',
+  MyAppointApi:WxApiRoot + '/ncov/BaAppointmentController/getUserList',
+  MyAuditRecord:WxApiRoot + '/ncov/BaAppointmentController/my/validate'
 };

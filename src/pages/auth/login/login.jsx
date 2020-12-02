@@ -1,4 +1,4 @@
-import Taro , { Component } from '@tarojs/taro';
+import Taro, {Component, showToast} from '@tarojs/taro';
 import { View , Button} from '@tarojs/components';
 import { showErrorToast } from '../../../utils/util';
 import {set as setGlobalData} from '../../../global_data';
@@ -27,21 +27,27 @@ class Login extends Component {
       setGlobalData('hasLogin', false)
       showErrorToast('微信登录失败');
       return;
+    }else{
+           Taro.navigateBack({
+            delta: 1,
+           })
+
+      showToast('微信登录成功');
     }
 
-    user.checkLogin().catch(() => {
-
-      user.loginByWeixin(e.detail.userInfo).then(() => {
-        setGlobalData('hasLogin', true)
-        Taro.navigateBack({
-          delta: 1
-        })
-      }).catch(() => {
-        setGlobalData('hasLogin', false)
-        showErrorToast('微信登录失败');
-      });
-
-    });
+    // user.checkLogin().catch(() => {
+    //
+    //   user.loginByWeixin(e.detail.userInfo).then(() => {
+    //     setGlobalData('hasLogin', true)
+    //     Taro.navigateBack({
+    //       delta: 1
+    //     })
+    //   }).catch(() => {
+    //     setGlobalData('hasLogin', false)
+    //     showErrorToast('微信登录失败');
+    //   });
+    //
+    // });
   }
 
   render() {

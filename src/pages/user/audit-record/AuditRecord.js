@@ -1,12 +1,12 @@
 import Taro, {Component, PureComponent, useState} from '@tarojs/taro'
 import {View, Text, ScrollView, Image} from '@tarojs/components'
 import {AtList, AtTabs, AtTabsPane, AtButton, AtListItem,} from "taro-ui"
-import './AdvanceOrder.scss'
+import './AuditRecord.scss'
 import ArrowRight from '@assets/home/check-result-query/arrow__right.svg'
-import {getMyAppointListApi} from "../../../services/user";
+import {getAuditRecordApi} from "../../../services/user";
 import moment from "moment";
 
-export class AdvanceOrder extends PureComponent {
+export class AuditRecord extends PureComponent {
   state = {
     current: 0,
     list: [],
@@ -15,7 +15,7 @@ export class AdvanceOrder extends PureComponent {
     limit: 10,
     totalPage: 1,
     userId: '',
-    tabList: [{title: '全部',id:0}, {title: '预约中',id:1}, {title: '已预约',id:2}, {title: '已完成',id:3}, {title: '已取消',id:4}]
+    tabList: [{title: '全部',id:0}, {title: '审核中',id:1}, {title: '已通过',id:2}, {title: '已驳回',id:3}]
   }
 
   componentDidMount() {
@@ -29,7 +29,7 @@ export class AdvanceOrder extends PureComponent {
     Taro.showLoading({
       title: '加载中...',
     });
-    getMyAppointListApi({
+    getAuditRecordApi({
       userId: this.state.userId,
       page: this.state.page,
       size: this.state.limit,
@@ -84,33 +84,10 @@ export class AdvanceOrder extends PureComponent {
       case 3:
         state = 2;
         break;
-      case 4:
-        state = 3;
-        break;
     }
     this.setState({current: value,state,page:1,list:[]},()=>{
       this._getList();
     })
-  }
-  goToPage = (item) => {
-    if(item.state ==2) {
-      Taro.navigateTo({
-        url: '/pages/user/order-success/OrderAppointSuccess',
-        events: {
-          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-          acceptDataFromOpenedPage: function (data) {
-            console.log(data)
-          },
-          someEvent: function (data) {
-            console.log(data)
-          }
-        },
-        success: function (res) {
-          // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit('acceptDataFromOpenerPage', {data: 'test'})
-        }
-      })
-    }
   }
   _getWeek=(date)=>{
     let week = moment(date).day()
@@ -129,6 +106,13 @@ export class AdvanceOrder extends PureComponent {
         return '周五';
       case 6:
         return '周六'
+    }
+  }
+  goToPage = (item)=>{
+    if(item.state ==1){
+        Taro.navigateTo({
+          url:'/pages/home/immediate-order/ImmediateOrder'
+        })
     }
   }
   render() {
@@ -152,18 +136,15 @@ export class AdvanceOrder extends PureComponent {
                             <Text className='listItem_left_date'>{date} {week}</Text>
                           </View>
                           <View className='listItem_right'>
-                            <Text className='listItem_right_status'>{_item.state==0?'预约中':_item.state ==1?'已预约':_item.state == 2?'已完成':'已取消'}</Text>
+                            <Text className='listItem_right_status'>{_item.state==0?'审核中':_item.state ==1?'已通过':'已驳回'}</Text>
                             <Image src={ArrowRight} className='listItem_right_arrow'/>
                           </View>
                         </View>
-                        <View className='wrap_footer'>
+                        {item.state ==2&&<View className='wrap_footer'>
                           <View className='op_btn_1'>
-                            <Text>{_item.state ==1?'取消预约':'再次预约'}</Text>
+                            <Text>重新预约</Text>
                           </View>
-                          {_item.state ==3&&<View className='op_btn_2'>
-                            <Text>删除</Text>
-                          </View>}
-                        </View>
+                        </View>}
                       </View>
                     )
                   })}
@@ -178,7 +159,7 @@ export class AdvanceOrder extends PureComponent {
   }
 }
 
-AdvanceOrder.config = {
+AuditRecord.config = {
   navigationBarTitleText: '我的预约'
 }
-export default AdvanceOrder
+export default AuditRecord

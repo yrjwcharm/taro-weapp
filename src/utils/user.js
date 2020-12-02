@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { loginByWeXin } from '../services/auth';
+import {loginByWeXin, loginByWXApi} from '../services/auth';
 
 /**
  * Promise封装wx.checkSession
@@ -45,13 +45,14 @@ export function loginByWeixin(userInfo) {
   return new Promise(function(resolve, reject) {
     return login().then((res) => {
       //登录远程服务器
-      loginByWeXin({
+      loginByWXApi({
         code: res.code,
         userInfo: userInfo
       }).then(loginRes => {
          //存储用户信息
-         Taro.setStorageSync('userInfo', loginRes.userInfo);
-         Taro.setStorageSync('token', loginRes.token);
+        console.log(333,loginRes);
+         // Taro.setStorageSync('userInfo', loginRes.userInfo);
+         // Taro.setStorageSync('token', loginRes.token);
 
          resolve(loginRes);
       }).catch(err => {
